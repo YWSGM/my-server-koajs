@@ -20,14 +20,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "autofix": "eslint . --ext .js --fix",
-    "precommit": "lint-staged",
+    "autofix": "eslint . --ext .js --fix"
   },
   "lint-staged": {
     "src/**/*.{js,json,css,vue}": [
-     "eslint --fix",
-     "git add"
+      "eslint --fix",
+      "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "keywords": [],
   "author": "",
