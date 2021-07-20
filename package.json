@@ -4,10 +4,12 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "husky": "^7.0.1",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-router": "^10.0.0",
     "koa2-cors": "^2.0.6",
+    "lint-staged": "^11.0.1",
     "mysql": "^2.16.0"
   },
   "devDependencies": {
@@ -18,7 +20,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "autofix": "eslint . --ext .js --fix"
+    "autofix": "eslint . --ext .js --fix",
+    "precommit": "lint-staged",
+  },
+  "lint-staged": {
+    "src/**/*.{js,json,css,vue}": [
+     "eslint --fix",
+     "git add"
+    ]
   },
   "keywords": [],
   "author": "",
