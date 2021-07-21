@@ -28,7 +28,7 @@
       // debugger使用
       // "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
       // 开发模式允许使用console
-      "no-console": 0,
+      "no-console": 1,
       // 条件语句中复制操作符需要用圆括号括起来
       "no-cond-assign": [2, "except-parens"],
       // 允许使用条件表达式使用常量
