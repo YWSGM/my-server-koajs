@@ -6,7 +6,7 @@
     npm start
 
 #### 已配置数据库连接方式，详见 
-    config/db
-    config/mysql
+    modules/db
+    modules/mysql
 #### 已接入 eslint
 #### 暂未接入 typeScript 
