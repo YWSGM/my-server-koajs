@@ -1,18 +1,6 @@
-/**
- * 封装 sql
- */
+const pool = require('./index');
 
-const mysql = require('mysql');
-const config = require('../db/default');
-
-const pool = mysql.createPool({
-    host: config.database.HOST,
-    user: config.database.USERNAME,
-    password: config.database.PASSWORD,
-    database: config.database.DATABASE,
-});
-
-class Mysql {
+class UserSql {
     getList() {
         try {
             return new Promise((resolve, reject) => {
@@ -55,4 +43,6 @@ class Mysql {
     }
 }
 
-module.exports = new Mysql();
+const userSql = new UserSql();
+
+module.exports = userSql;

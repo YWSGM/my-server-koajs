@@ -1,14 +1,14 @@
 const Koa = require('koa');
-const Router = require('koa-router');
 const cors = require('koa2-cors');
 const bodyParser = require('koa-body');
-const routers = require('./router/index');
-const routerPath = require('./router/router_path');
+
+const router = require('./router/index');
+
+require('./api/user');
 
 // const data = require('./data/test')
 
 const app = new Koa();
-const router = new Router();
 
 // 接收 json 数据
 app.use(bodyParser({
@@ -25,14 +25,6 @@ app.use(bodyParser({
     enableTypes: ['json', 'form', 'text'],
     }))
 */
-
-router.get(routerPath.LIST, async(ctx, next) => {
-    await routers.getList(ctx, next);
-});
-
-router.post(routerPath.SELECTBYID, async(ctx, next) => {
-    await routers.getInfoById(ctx, next);
-});
 
 // 开始服务并生成路由
 app.use(router.routes())
