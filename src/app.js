@@ -11,9 +11,10 @@ require('./api/user');
 
 const app = new Koa();
 
+// eslint-disable-next-line consistent-return
 app.use(async(ctx, next) => {
     // /** 请求路径 */
-    // const path = ctx.request.path;
+    const { path } = ctx.request;
 
     ctx.set({
         'Access-Control-Allow-Origin': '*', // 指定请求域，* 就是所有域名都可访问，即跨域打开
@@ -25,11 +26,16 @@ app.use(async(ctx, next) => {
         // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     });
 
-    // const hasPath = router.stack.some(item => item.path == path);
-    // // 判断是否 404
-    // if (path != "/" && !hasPath) {
-    //     return ctx.body = "<h1 style="text-align: center; line-height: 40px; font-size: 24px; color: tomato">404：访问的页面（路径）不存在</h1>";
-    // }
+    const hasPath = router.stack.some(item => item.path === path);
+    // 判断是否 404
+    if (path !== '/' && !hasPath) {
+        // eslint-disable-next-line no-return-assign
+        return ctx.body = {
+            data: null,
+            code: 404,
+            msg: 'fail',
+        };
+    }
     // 如果前端设置了 XHR.setRequestHeader("Authorization", "xxxx") 那对应的字段就是 Authorization
     // 并且这里要转换一下状态码
     // console.log(ctx.request.method);
@@ -39,6 +45,7 @@ app.use(async(ctx, next) => {
 
     try {
         await next();
+        return null;
     } catch (err) {
         ctx.response.status = err.statusCode || err.status || 500;
         ctx.response.body = {
