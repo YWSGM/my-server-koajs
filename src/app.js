@@ -50,6 +50,8 @@ app.use(async(ctx, next) => {
         ctx.response.status = err.statusCode || err.status || 500;
         ctx.response.body = {
             message: err.message,
+            code: err.statusCode || err.status || 500,
+            data: null,
         };
     }
 });
