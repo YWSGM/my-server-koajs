@@ -1,5 +1,4 @@
 // 封装 router path
-
 const routerPath = {
 
     /** 获取列表 */

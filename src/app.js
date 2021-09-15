@@ -5,7 +5,7 @@ const bodyParser = require('koa-body');
 const router = require('./router/index');
 
 // 添加模块代码
-require('./api/user');
+require('./api/controller/user');
 
 // const data = require('./data/test')
 
