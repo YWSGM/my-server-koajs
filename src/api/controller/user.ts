@@ -36,16 +36,29 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
             return;
         }
         const data: any = await UserSql.getUserById(id);
-        if (data) {
-            ctx.body = {
-                data,
-                code: 0,
-                msg: 'Success',
-            };
-            console.log('Success');
-        }
+        ctx.body = {
+            data,
+            code: 0,
+            msg: 'Success',
+        };
+        console.log('Success');
     } catch (error) {
         console.log('查询失败', `id为--${id}`);
+        ctx.body = {
+            data: {},
+            code: 1,
+            msg: error.message,
+        };
         throw new Error(error);
     }
 });
+
+router.post('/createOrUpdate', async (ctx, next) => {
+    const body = ctx.request.body
+    try{
+        const res = await UserSql.createOrUpdate(body);
+        ctx.body = res;
+    } catch (e){
+        console.error('数据插入失败', e);
+    }
+})

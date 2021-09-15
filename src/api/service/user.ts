@@ -60,6 +60,37 @@ class UserSql {
             return error.message;
         }
     }
+
+    /**
+     * 插入或更新人员
+     * @param body 请求体
+     * @returns
+     */
+    async createOrUpdate(body: any) {
+        if (body.id) {
+            try {
+                userInfo.update(body, {
+                    where: {
+                        id: body.id,
+                    }
+                });
+                return {
+                    msg: '更新成功',
+                    data: {},
+                    code: 0
+                }
+            } catch (error) {
+                console.error(`更新失败，${error.message}`);
+                return {
+                    msg: `更新失败，${error.message}`,
+                    data: {},
+                    code: 1
+                }
+            }
+        } else {
+            userInfo.create(body);
+        }
+    }
 }
 
 const userSql = new UserSql();
