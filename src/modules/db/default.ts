@@ -1,3 +1,6 @@
+/**
+ * 定义数据库
+ */
 const config = {
     // 启动端口
     port: 3000,
@@ -39,4 +42,4 @@ const config = {
     token_tip: '无效的token',
 };
 
-module.exports = config;
+export default config;

@@ -1,5 +1,4 @@
 // 封装 router path
-
 const routerPath = {
 
     /** 获取列表 */
@@ -9,4 +8,4 @@ const routerPath = {
     SELECTBYID: '/selectById',
 };
 
-module.exports = routerPath;
+export default routerPath;

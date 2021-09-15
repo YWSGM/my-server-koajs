@@ -1,18 +1,20 @@
-const Koa = require('koa');
-const cors = require('koa2-cors');
-const bodyParser = require('koa-body');
+import * as Application from 'koa';
+import * as cors from 'koa2-cors';
+import * as bodyParser from 'koa-body';
 
-const router = require('./router/index');
+import router from './router/index';
+
+import './api/controller/user';
 
 // 添加模块代码
-require('./api/user');
+// require('./api/controller/user');
 
 // const data = require('./data/test')
 
-const app = new Koa();
+const app = new Application();
 
 // eslint-disable-next-line consistent-return
-app.use(async(ctx, next) => {
+app.use(async(ctx: { request: { path: string, method: string }, set: Function, body: any, response: any }, next: any) => {
     // /** 请求路径 */
     const { path } = ctx.request;
 
@@ -26,12 +28,12 @@ app.use(async(ctx, next) => {
         // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     });
 
-    const hasPath = router.stack.some(item => item.path === path);
+    const hasPath = router.stack.some((item: { path: string; }) => item.path === path);
     // 判断是否 404
     if (path !== '/' && !hasPath) {
         // eslint-disable-next-line no-return-assign
         return ctx.body = {
-            data: null,
+            data: {},
             code: 404,
             msg: 'fail',
         };
@@ -50,12 +52,15 @@ app.use(async(ctx, next) => {
         ctx.response.status = err.statusCode || err.status || 500;
         ctx.response.body = {
             message: err.message,
+            code: err.statusCode || err.status || 500,
+            data: {},
         };
     }
 });
 
 // 接收 json 数据
 app.use(bodyParser({
+    // @ts-ignore
     enableTypes: ['json', 'form', 'text'],
     multipart: true, // ***** 就是这个 (是否支持 multipart-formdate 的表单)
 }));
