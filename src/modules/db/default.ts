@@ -42,4 +42,4 @@ const config = {
     token_tip: '无效的token',
 };
 
-module.exports = config;
+export default config;

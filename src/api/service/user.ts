@@ -1,5 +1,4 @@
-const userInfo = require('../model/user');
-const pool = require('../../modules/mysql/index');
+import userInfo from '../model/user';
 
 /**
  * 服务器代码
@@ -24,7 +23,7 @@ class UserSql {
             //         // console.log('The solution is: ', results[0].solution);
             //     });
             // });
-            const user = await userInfo.userInfo.findAll();
+            const user = await userInfo.findAll();
             return user;
         } catch (error) {
             throw new Error(error);
@@ -36,26 +35,33 @@ class UserSql {
      * @param {number} id
      * @returns 人员信息
      */
-    getUserById(id) {
+    async getUserById(id: number) {
         try {
-            return new Promise((resolve, reject) => {
-                pool.query(`SELECT * FROM userInfo where id =${id}`, (error, results, fields) => {
-                    if (error) {
-                        reject();
-                        throw new Error({
-                            error,
-                            fields,
-                        });
-                    }
-                    resolve(results);
-                });
-            });
+            // return new Promise((resolve, reject) => {
+            //     query(`SELECT * FROM userInfo where id =${id}`, (error, results, fields) => {
+            //         if (error) {
+            //             reject();
+            //             throw new Error({
+            //                 error,
+            //                 fields,
+            //             });
+            //         }
+            //         resolve(results);
+            //     });
+            // });
+            const user = await userInfo.findAll({
+                where: {
+                    id,
+                }
+            })
+            return user;
         } catch (error) {
-            throw new Error(error);
+            console.error(error.message)
+            return error.message;
         }
     }
 }
 
 const userSql = new UserSql();
 
-module.exports = userSql;
+export default userSql;

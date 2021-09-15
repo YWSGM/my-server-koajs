@@ -8,4 +8,4 @@ const routerPath = {
     SELECTBYID: '/selectById',
 };
 
-module.exports = routerPath;
+export default routerPath;

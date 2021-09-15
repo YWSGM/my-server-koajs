@@ -1,13 +1,13 @@
-const router = require('../../router/index');
-const routerPath = require('../../router/user-path');
-const userSql = require('../service/user');
+import router from '../../router/index';
+import routerPath from '../../router/user-path';
+import UserSql from '../service/user';
 
 // 路由前缀
 router.prefix('/users');
 
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
-        const data = await userSql.getList();
+        const data = await UserSql.getList();
         if (data) {
             ctx.body = {
                 code: 0,
@@ -35,7 +35,7 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
             console.log('参数不合法');
             return;
         }
-        const data = await userSql.getUserById(id);
+        const data: any = await UserSql.getUserById(id);
         if (data) {
             ctx.body = {
                 data,

@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-const mySequelize = require('../../modules/db/index');
+import { DataTypes } from 'sequelize';
+import mySequelize from '../../modules/db/index';
 
 /**
  * 创建数据库实例
@@ -8,33 +8,31 @@ const userInfo = mySequelize.define(
     'userInfo',
     {
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         userName: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
         sex: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
         age: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
         },
         passWord: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
         phone: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
     },
     {
         freezeTableName: true, // 默认false修改表名为复数，true不修改表名，与数据库表名同步
-        // tableName: 'userInfo',
+        tableName: 'userInfo',
         timestamps: false,
     },
 );
 
-module.exports = {
-    userInfo,
-};
+export default class user extends userInfo{}
