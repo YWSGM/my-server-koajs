@@ -1,4 +1,5 @@
 import userInfo from '../model/user';
+import { UserInfo } from '../../interface/user';
 
 /**
  * 服务器代码
@@ -8,10 +9,7 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList(query: {
-        pageSize: number,
-        pageNum: number,
-    } = {
+    async getList(query: UserInfo.page = {
         pageNum: 1,
         pageSize: 10,
     }) {

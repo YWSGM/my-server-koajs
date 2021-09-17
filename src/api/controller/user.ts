@@ -1,3 +1,4 @@
+import { UserInfo } from '../../interface/user';
 import router from '../../router/index';
 import routerPath from '../../router/user-path';
 import UserSql from '../service/user';
@@ -7,7 +8,12 @@ router.prefix('/users');
 
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
-        const data = await UserSql.getList();
+        const { pageSize, pageNum } = ctx.request.query
+        const query: UserInfo.page = {
+            pageSize: +pageSize,
+            pageNum: +pageNum
+        }
+        const data = await UserSql.getList(query);
         if (data) {
             ctx.body = {
                 code: 0,
