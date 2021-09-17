@@ -17,6 +17,11 @@ router.get(routerPath.LIST, async(ctx, next) => {
             console.log('Success');
         }
     } catch (e) {
+        ctx.body = {
+            code: 1,
+            msg: e.message,
+            data: [],
+        }
         throw new Error(e);
     }
 });

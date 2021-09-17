@@ -8,23 +8,26 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList() {
+    async getList(query: {
+        pageSize: number,
+        pageNum: number,
+    } = {
+        pageNum: 1,
+        pageSize: 10,
+    }) {
         try {
-            // return new Promise((resolve, reject) => {
-            //     pool.query('SELECT * from userInfo', (error, results, fields) => {
-            //         if (error) {
-            //             reject();
-            //             throw new Error({
-            //                 error,
-            //                 fields,
-            //             });
-            //         }
-            //         resolve(results);
-            //         // console.log('The solution is: ', results[0].solution);
-            //     });
-            // });
-            const user = await userInfo.findAll();
-            return user;
+            const { pageNum, pageSize } = query;
+            const currentPageSize = (pageNum - 1) * 10
+            const user = await userInfo.findAndCountAll({
+                limit: pageSize,
+                offset: currentPageSize,
+                where: {},
+                order: [['id', 'DESC']],
+            });
+            return {
+                total: user.count,
+                list: user.rows
+            };
         } catch (error) {
             throw new Error(error);
         }
