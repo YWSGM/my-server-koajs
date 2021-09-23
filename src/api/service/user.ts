@@ -38,18 +38,6 @@ class UserSql {
      */
     async getUserById(id: number) {
         try {
-            // return new Promise((resolve, reject) => {
-            //     query(`SELECT * FROM userInfo where id =${id}`, (error, results, fields) => {
-            //         if (error) {
-            //             reject();
-            //             throw new Error({
-            //                 error,
-            //                 fields,
-            //             });
-            //         }
-            //         resolve(results);
-            //     });
-            // });
             const user = await userInfo.findAll({
                 where: {
                     id,
@@ -58,7 +46,7 @@ class UserSql {
             return user;
         } catch (error) {
             console.error(error.message)
-            return error.message;
+            throw new Error(error);
         }
     }
 
@@ -68,28 +56,46 @@ class UserSql {
      * @returns
      */
     async createOrUpdate(body: any) {
+        let data = {}
         if (body.id) {
             try {
-                userInfo.update(body, {
+                await userInfo.update(body, {
                     where: {
                         id: body.id,
                     }
                 });
-                return {
+                data = {
                     msg: '更新成功',
                     data: {},
                     code: 0
                 }
             } catch (error) {
                 console.error(`更新失败，${error.message}`);
-                return {
+                data = {
                     msg: `更新失败，${error.message}`,
                     data: {},
                     code: 1
                 }
             }
+            return data;
         } else {
-            userInfo.create(body);
+            try {
+                await userInfo.create(body);
+                data = {
+                    msg: '增加成功',
+                    data: {},
+                    code: 0
+                }
+            } catch (error) {
+                console.error('增加失败', error.mesage);
+                
+                data = {
+                    msg: `增加失败, ${error.mesage}`,
+                    data: {},
+                    code: 1
+                }
+            }
+            return data
         }
     }
 }

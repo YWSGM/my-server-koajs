@@ -35,6 +35,7 @@ router.get(routerPath.LIST, async(ctx, next) => {
 router.post(routerPath.SELECTBYID, async(ctx, next) => {
     const {
         id,
+        //@ts-ignore
     } = ctx.request.body;
     try {
         if (!id) {
@@ -65,6 +66,7 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
 });
 
 router.post('/createOrUpdate', async (ctx, next) => {
+    //@ts-ignore
     const body = ctx.request.body
     try{
         const res = await UserSql.createOrUpdate(body);
