@@ -1,4 +1,5 @@
 import userInfo from '../model/user';
+import { UserInfo } from '../../interface/user';
 
 /**
  * 服务器代码
@@ -8,23 +9,23 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList() {
+    async getList(query: UserInfo.page = {
+        pageNum: 1,
+        pageSize: 10,
+    }) {
         try {
-            // return new Promise((resolve, reject) => {
-            //     pool.query('SELECT * from userInfo', (error, results, fields) => {
-            //         if (error) {
-            //             reject();
-            //             throw new Error({
-            //                 error,
-            //                 fields,
-            //             });
-            //         }
-            //         resolve(results);
-            //         // console.log('The solution is: ', results[0].solution);
-            //     });
-            // });
-            const user = await userInfo.findAll();
-            return user;
+            const { pageNum, pageSize } = query;
+            const currentPageSize = (pageNum - 1) * 10
+            const user = await userInfo.findAndCountAll({
+                limit: pageSize,
+                offset: currentPageSize,
+                where: {},
+                order: [['id', 'DESC']],
+            });
+            return {
+                total: user.count,
+                list: user.rows
+            };
         } catch (error) {
             throw new Error(error);
         }
@@ -37,18 +38,6 @@ class UserSql {
      */
     async getUserById(id: number) {
         try {
-            // return new Promise((resolve, reject) => {
-            //     query(`SELECT * FROM userInfo where id =${id}`, (error, results, fields) => {
-            //         if (error) {
-            //             reject();
-            //             throw new Error({
-            //                 error,
-            //                 fields,
-            //             });
-            //         }
-            //         resolve(results);
-            //     });
-            // });
             const user = await userInfo.findAll({
                 where: {
                     id,
@@ -57,7 +46,56 @@ class UserSql {
             return user;
         } catch (error) {
             console.error(error.message)
-            return error.message;
+            throw new Error(error);
+        }
+    }
+
+    /**
+     * 插入或更新人员
+     * @param body 请求体
+     * @returns
+     */
+    async createOrUpdate(body: any) {
+        let data = {}
+        if (body.id) {
+            try {
+                await userInfo.update(body, {
+                    where: {
+                        id: body.id,
+                    }
+                });
+                data = {
+                    msg: '更新成功',
+                    data: {},
+                    code: 0
+                }
+            } catch (error) {
+                console.error(`更新失败，${error.message}`);
+                data = {
+                    msg: `更新失败，${error.message}`,
+                    data: {},
+                    code: 1
+                }
+            }
+            return data;
+        } else {
+            try {
+                await userInfo.create(body);
+                data = {
+                    msg: '增加成功',
+                    data: {},
+                    code: 0
+                }
+            } catch (error) {
+                console.error('增加失败', error.mesage);
+                
+                data = {
+                    msg: `增加失败, ${error.mesage}`,
+                    data: {},
+                    code: 1
+                }
+            }
+            return data
         }
     }
 }
