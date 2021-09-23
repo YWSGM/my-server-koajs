@@ -1,7 +1,5 @@
-import dbConfig from './default';
-
-// @ts-ignore
 import * as Sequelize from 'sequelize';
+import dbConfig from './default';
 
 /**
  * 使用 sequelize 定义
