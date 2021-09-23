@@ -15,7 +15,7 @@ class UserSql {
     }) {
         try {
             const { pageNum, pageSize } = query;
-            const currentPageSize = (pageNum - 1) * 10
+            const currentPageSize = (pageNum - 1) * 10;
             const user = await userInfo.findAndCountAll({
                 limit: pageSize,
                 offset: currentPageSize,
@@ -24,7 +24,7 @@ class UserSql {
             });
             return {
                 total: user.count,
-                list: user.rows
+                list: user.rows,
             };
         } catch (error) {
             throw new Error(error);
@@ -41,11 +41,11 @@ class UserSql {
             const user = await userInfo.findAll({
                 where: {
                     id,
-                }
-            })
+                },
+            });
             return user;
         } catch (error) {
-            console.error(error.message)
+            console.error(error.message);
             throw new Error(error);
         }
     }
@@ -56,47 +56,47 @@ class UserSql {
      * @returns
      */
     async createOrUpdate(body: any) {
-        let data = {}
+        let data = {};
         if (body.id) {
             try {
                 await userInfo.update(body, {
                     where: {
                         id: body.id,
-                    }
+                    },
                 });
                 data = {
                     msg: '更新成功',
                     data: {},
-                    code: 0
-                }
+                    code: 0,
+                };
             } catch (error) {
                 console.error(`更新失败，${error.message}`);
                 data = {
                     msg: `更新失败，${error.message}`,
                     data: {},
-                    code: 1
-                }
+                    code: 1,
+                };
             }
             return data;
-        } else {
-            try {
-                await userInfo.create(body);
-                data = {
-                    msg: '增加成功',
-                    data: {},
-                    code: 0
-                }
-            } catch (error) {
-                console.error('增加失败', error.mesage);
-                
-                data = {
-                    msg: `增加失败, ${error.mesage}`,
-                    data: {},
-                    code: 1
-                }
-            }
-            return data
         }
+        try {
+            await userInfo.create(body);
+            data = {
+                msg: '增加成功',
+                data: {},
+                code: 0,
+            };
+        } catch (error) {
+            console.error('增加失败', error.mesage);
+
+            data = {
+                msg: `增加失败, ${error.mesage}`,
+                data: {},
+                code: 1,
+            };
+        }
+        return data;
+
     }
 }
 

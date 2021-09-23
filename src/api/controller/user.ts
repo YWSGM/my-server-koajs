@@ -8,11 +8,11 @@ router.prefix('/users');
 
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
-        const { pageSize, pageNum } = ctx.request.query
+        const { pageSize, pageNum } = ctx.request.query;
         const query: UserInfo.page = {
             pageSize: +pageSize,
-            pageNum: +pageNum
-        }
+            pageNum: +pageNum,
+        };
         const data = await UserSql.getList(query);
         if (data) {
             ctx.body = {
@@ -27,7 +27,7 @@ router.get(routerPath.LIST, async(ctx, next) => {
             code: 1,
             msg: e.message,
             data: [],
-        }
+        };
         throw new Error(e);
     }
 });
@@ -35,7 +35,7 @@ router.get(routerPath.LIST, async(ctx, next) => {
 router.post(routerPath.SELECTBYID, async(ctx, next) => {
     const {
         id,
-        //@ts-ignore
+        // @ts-ignore
     } = ctx.request.body;
     try {
         if (!id) {
@@ -65,13 +65,13 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
     }
 });
 
-router.post('/createOrUpdate', async (ctx, next) => {
-    //@ts-ignore
-    const body = ctx.request.body
-    try{
+router.post('/createOrUpdate', async(ctx, next) => {
+    // @ts-ignore
+    const { body } = ctx.request;
+    try {
         const res = await UserSql.createOrUpdate(body);
         ctx.body = res;
-    } catch (e){
+    } catch (e) {
         console.error('数据插入失败', e);
     }
-})
+});
