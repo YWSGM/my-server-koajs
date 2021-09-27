@@ -9,10 +9,7 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList(query: UserInfo.page = {
-        pageNum: 1,
-        pageSize: 10,
-    }) {
+    async getList(query: UserInfo.PageInfo = { pageNum: 1, pageSize: 10 }): Promise<UserInfo.UserList> {
         try {
             const { pageNum, pageSize } = query;
             const currentPageSize = (pageNum - 1) * 10;
@@ -23,11 +20,22 @@ class UserSql {
                 order: [['id', 'DESC']],
             });
             return {
-                total: user.count,
-                list: user.rows,
+                code: 0,
+                msg: '查询成功',
+                data: {
+                    total: user.count,
+                    list: user.rows,
+                },
             };
         } catch (error) {
-            throw new Error(error);
+            return {
+                code: 1,
+                msg: `查询失败，${error}`,
+                data: {
+                    total: 0,
+                    list: [],
+                },
+            };
         }
     }
 
@@ -36,17 +44,31 @@ class UserSql {
      * @param {number} id
      * @returns 人员信息
      */
-    async getUserById(id: number) {
+    async getUserById(id: number): Promise<UserInfo.UserList> {
         try {
             const user = await userInfo.findAll({
                 where: {
                     id,
                 },
             });
-            return user;
+            return {
+                code: 0,
+                msg: '查询成功',
+                data: {
+                    total: user.length,
+                    list: user,
+                },
+            };
         } catch (error) {
             console.error(error.message);
-            throw new Error(error);
+            return {
+                code: 1,
+                msg: `查询失败，${error}`,
+                data: {
+                    total: 0,
+                    list: [],
+                },
+            };
         }
     }
 
