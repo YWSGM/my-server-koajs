@@ -14,19 +14,15 @@ router.get(routerPath.LIST, async(ctx, next) => {
             pageNum: +pageNum,
         };
         const data = await UserSql.getList(query);
-        if (data) {
-            ctx.body = {
-                code: 0,
-                data,
-                msg: 'success',
-            };
-            console.log('Success');
-        }
+        ctx.body = data;
     } catch (e) {
         ctx.body = {
+            data: {
+                list: [],
+                total: 0,
+            },
             code: 1,
-            msg: e.message,
-            data: [],
+            msg: `查询失败，${e}`,
         };
         throw new Error(e);
     }
@@ -48,16 +44,14 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
             return;
         }
         const data: any = await UserSql.getUserById(id);
-        ctx.body = {
-            data,
-            code: 0,
-            msg: 'Success',
-        };
-        console.log('Success');
+        ctx.body = data;
     } catch (error) {
         console.log('查询失败', `id为--${id}`);
         ctx.body = {
-            data: {},
+            data: {
+                list: [],
+                total: 0,
+            },
             code: 1,
             msg: error.message,
         };

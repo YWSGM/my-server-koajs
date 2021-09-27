@@ -23,11 +23,22 @@ class UserSql {
                 order: [['id', 'DESC']],
             });
             return {
-                total: user.count,
-                list: user.rows,
+                ode: 0,
+                msg: '查询成功',
+                data: {
+                    total: user.count,
+                    list: user.rows,
+                },
             };
         } catch (error) {
-            throw new Error(error);
+            return {
+                code: 1,
+                msg: `查询失败，${error}`,
+                data: {
+                    total: 0,
+                    list: [],
+                },
+            };
         }
     }
 
@@ -43,10 +54,24 @@ class UserSql {
                     id,
                 },
             });
-            return user;
+            return {
+                ode: 0,
+                msg: '查询成功',
+                data: {
+                    total: user.length,
+                    list: user,
+                },
+            };
         } catch (error) {
             console.error(error.message);
-            throw new Error(error);
+            return {
+                ode: 0,
+                msg: `查询失败，${error}`,
+                data: {
+                    total: 0,
+                    list: [],
+                },
+            };
         }
     }
 
