@@ -9,7 +9,7 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList(query: UserInfo.page = {
+    async getList(query: UserInfo.PageInfo = {
         pageNum: 1,
         pageSize: 10,
     }) {
