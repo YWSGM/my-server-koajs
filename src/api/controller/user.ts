@@ -10,8 +10,8 @@ router.get(routerPath.LIST, async(ctx, next) => {
     try {
         const { pageSize, pageNum } = ctx.request.query;
         const query: UserInfo.PageInfo = {
-            pageSize: +pageSize,
-            pageNum: +pageNum,
+            pageSize: pageSize ? +pageSize : 10,
+            pageNum: pageNum ? +pageNum : 1,
         };
         const data = await UserSql.getList(query);
         ctx.body = data;
@@ -28,11 +28,11 @@ router.get(routerPath.LIST, async(ctx, next) => {
     }
 });
 
-router.post(routerPath.SELECTBYID, async(ctx, next) => {
+router.get(routerPath.SELECTBYID, async(ctx, next) => {
     const {
         id,
         // @ts-ignore
-    } = ctx.request.body;
+    } = ctx.request.query;
     try {
         if (!id) {
             ctx.body = {
@@ -43,7 +43,7 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
             console.log('参数不合法');
             return;
         }
-        const data: any = await UserSql.getUserById(id);
+        const data: any = await UserSql.getUserById(+id);
         ctx.body = data;
     } catch (error) {
         console.log('查询失败', `id为--${id}`);

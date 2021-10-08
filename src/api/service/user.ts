@@ -12,6 +12,16 @@ class UserSql {
     async getList(query: UserInfo.PageInfo = { pageNum: 1, pageSize: 10 }): Promise<UserInfo.UserList> {
         try {
             const { pageNum, pageSize } = query;
+            if (!pageNum || !pageSize) {
+                return {
+                    code: 1,
+                    msg: '查询失败，缺少参数pageNum、pageSize',
+                    data: {
+                        total: 0,
+                        list: [],
+                    },
+                };
+            }
             const currentPageSize = (pageNum - 1) * 10;
             const user = await userInfo.findAndCountAll({
                 limit: pageSize,
@@ -104,15 +114,15 @@ class UserSql {
         try {
             await userInfo.create(body);
             data = {
-                msg: '增加成功',
+                msg: '新增成功',
                 data: {},
                 code: 0,
             };
         } catch (error) {
-            console.error('增加失败', error.mesage);
+            console.error('新增失败', error.mesage);
 
             data = {
-                msg: `增加失败, ${error.mesage}`,
+                msg: `新增失败, ${error.mesage}`,
                 data: {},
                 code: 1,
             };
