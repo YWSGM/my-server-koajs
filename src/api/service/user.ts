@@ -104,15 +104,15 @@ class UserSql {
         try {
             await userInfo.create(body);
             data = {
-                msg: '增加成功',
+                msg: '新增成功',
                 data: {},
                 code: 0,
             };
         } catch (error) {
-            console.error('增加失败', error.mesage);
+            console.error('新增失败', error.mesage);
 
             data = {
-                msg: `增加失败, ${error.mesage}`,
+                msg: `新增失败, ${error.mesage}`,
                 data: {},
                 code: 1,
             };

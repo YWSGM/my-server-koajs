@@ -43,6 +43,15 @@ router.post(routerPath.SELECTBYID, async(ctx, next) => {
             console.log('参数不合法');
             return;
         }
+        if (typeof id !== 'number') {
+            ctx.body = {
+                data: null,
+                code: 1,
+                msg: '参数不合法',
+            };
+            console.log('参数不合法');
+            return;
+        }
         const data: any = await UserSql.getUserById(id);
         ctx.body = data;
     } catch (error) {
