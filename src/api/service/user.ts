@@ -26,6 +26,7 @@ class UserSql {
             const user = await userInfo.findAndCountAll({
                 limit: pageSize,
                 offset: currentPageSize,
+                // distinct: true, // 多表联查去重设置
                 where: {},
                 order: [['id', 'DESC']],
             });
