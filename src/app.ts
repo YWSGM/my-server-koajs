@@ -1,6 +1,7 @@
 import * as Application from 'koa';
 import * as cors from 'koa2-cors';
 import * as bodyParser from 'koa-body';
+import config from './modules/db/default'
 
 import router from './router/index';
 
@@ -79,6 +80,6 @@ app.use(bodyParser({
 app.use(router.routes())
     .use(router.allowedMethods())
     .use(cors)
-    .listen(3100, () => {
-        console.log('服务器已启动，请访问：localhost:3100/');
+    .listen(config.port, () => {
+        console.log(`服务器已启动，请访问：localhost:${config.port}/`);
     });
