@@ -8,7 +8,7 @@ router.prefix('/users');
 
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
-        const { pageSize, pageNum } = ctx.request.query;
+        const { pageSize, pageNum } = ctx.request.query as { pageSize: string; pageNum: string };
         const query: UserInfo.PageInfo = {
             pageSize: pageSize ? +pageSize : 10,
             pageNum: pageNum ? +pageNum : 1,

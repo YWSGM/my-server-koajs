@@ -1,7 +1,7 @@
 import * as Application from 'koa';
 import * as cors from 'koa2-cors';
 import * as bodyParser from 'koa-body';
-import config from './modules/db/default'
+import config from './modules/db/default';
 
 import router from './router/index';
 
