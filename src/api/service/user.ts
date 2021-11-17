@@ -113,12 +113,25 @@ class UserSql {
             return data;
         }
         try {
-            await userInfo.create(body);
-            data = {
-                msg: '新增成功',
-                data: {},
-                code: 0,
-            };
+            const findAll = await userInfo.findAll({
+                where: {
+                    userName: body.userName,
+                },
+            });
+            if (!findAll) {
+                await userInfo.create(body);
+                data = {
+                    msg: '新增成功',
+                    data: {},
+                    code: 0,
+                };
+            } else {
+                data = {
+                    msg: '新增失败，该用户名已存在',
+                    data: {},
+                    code: 1,
+                };
+            }
         } catch (error) {
             console.error('新增失败', error.mesage);
 
