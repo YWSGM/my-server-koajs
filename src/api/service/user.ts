@@ -118,7 +118,7 @@ class UserSql {
                     userName: body.userName,
                 },
             });
-            if (!findAll) {
+            if (findAll.length === 0) {
                 await userInfo.create(body);
                 data = {
                     msg: '新增成功',
