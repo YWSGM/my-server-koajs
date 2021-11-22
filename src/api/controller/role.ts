@@ -18,7 +18,7 @@ router.get('/list', async(ctx, next) => {
     ctx.body = list;
 });
 
-router.get('/roleDetail', (ctx) => {
+router.get('/roleDetail', async(ctx) => {
     const { id } = ctx.request.query as { id: string };
     if (!id) {
         ctx.body = {
