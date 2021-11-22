@@ -7,4 +7,9 @@ export namespace RoleNameSpace{
         roleDesc: string;
         id: number;
     }
+    export interface RoleDetail {
+        code: number;
+        data: RoleInfo | {};
+        msg: string;
+    }
 }

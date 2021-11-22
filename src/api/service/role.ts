@@ -100,6 +100,27 @@ class RoleSql {
             };
         }
     }
+
+    async getRoleDetail(id: number): Promise<RoleNameSpace.RoleDetail> {
+        const data = {
+            data: {},
+            code: 1,
+            msg: '查询失败',
+        };
+        try {
+            const detail = await RoleInfo.findAll({
+                where: {
+                    id,
+                },
+            });
+            data.data = detail;
+            data.code = 0;
+            data.msg = '查询成功';
+            return data;
+        } catch (e) {
+            return data;
+        }
+    }
 }
 
 const roleSql = new RoleSql();

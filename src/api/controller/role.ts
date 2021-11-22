@@ -18,6 +18,20 @@ router.get('/list', async(ctx, next) => {
     ctx.body = list;
 });
 
+router.get('/roleDetail', (ctx) => {
+    const { id } = ctx.request.query as { id: string };
+    if (!id) {
+        ctx.body = {
+            data: {},
+            msg: '参数不合法',
+            code: 1,
+        };
+        return;
+    }
+    const data = await roleSql.getRoleDetail(+id);
+    ctx.body = data;
+});
+
 router.post('creatOrUpdate', async(ctx, next) => {
     // @ts-ignore
     const { body } = ctx.request;
