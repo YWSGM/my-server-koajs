@@ -4,40 +4,28 @@ import mySequelize from '../../modules/db/index';
 /**
  * 创建数据库实例
  */
-const userInfo = mySequelize.define(
-    'user_info',
+const roleInfo = mySequelize.define(
+    'role_info',
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        userName: {
+        roleName: {
             type: DataTypes.STRING,
-            field: 'user_name',
+            field: 'role_name',
         },
-        sex: {
+        roleDesc: {
             type: DataTypes.STRING,
-            field: 'sex',
-        },
-        age: {
-            type: DataTypes.INTEGER,
-            field: 'age',
-        },
-        passWord: {
-            type: DataTypes.STRING,
-            field: 'pass_word',
-        },
-        phone: {
-            type: DataTypes.STRING,
-            field: 'phone',
+            field: 'role_desc',
         },
     },
     {
         freezeTableName: true, // 默认false修改表名为复数，true不修改表名，与数据库表名同步
-        tableName: 'user_info',
+        tableName: 'role_info',
         timestamps: false,
     },
 );
 
-export default class user extends userInfo {}
+export default class RoleInfo extends roleInfo {}
