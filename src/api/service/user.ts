@@ -1,5 +1,5 @@
 import userInfo from '../model/user';
-import { UserInfo } from '../../interface/user';
+import { CommonInterface } from '../../interface/common_interface';
 
 /**
  * 服务器代码
@@ -9,7 +9,7 @@ class UserSql {
      * 获取用户信息列表
      * @returns 用户信息列表
      */
-    async getList(query: UserInfo.PageInfo = { pageNum: 1, pageSize: 10 }): Promise<UserInfo.UserList> {
+    async getList(query: CommonInterface.PageInfo = { pageNum: 1, pageSize: 10 }): Promise<CommonInterface.DataInfo> {
         try {
             const { pageNum, pageSize } = query;
             if (!pageNum || !pageSize) {
@@ -55,7 +55,7 @@ class UserSql {
      * @param {number} id
      * @returns 人员信息
      */
-    async getUserById(id: number): Promise<UserInfo.UserList> {
+    async getUserById(id: number): Promise<CommonInterface.DataInfo> {
         try {
             const user = await userInfo.findAll({
                 where: {

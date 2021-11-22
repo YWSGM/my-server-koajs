@@ -2,7 +2,7 @@
  *
  */
 import RoleInfo from '../model/role';
-import { RoleNameSpace } from '../../interface/role';
+import { CommonInterface } from '../../interface/common_interface';
 
 class RoleSql {
     /**
@@ -10,8 +10,8 @@ class RoleSql {
      * @returns
      * @param query
      */
-    async getRoleList(query: RoleNameSpace.PageInfo): Promise<RoleNameSpace.RoleList> {
-        const data: RoleNameSpace.RoleList = {
+    async getRoleList(query: CommonInterface.PageInfo): Promise<CommonInterface.DataInfo> {
+        const data: CommonInterface.DataInfo = {
             msg: '查询失败',
             code: 1,
             data: {
