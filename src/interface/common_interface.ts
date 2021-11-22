@@ -7,9 +7,6 @@ export namespace CommonInterface{
         pageNum: number,
     }
 
-    /**
-     * 用户列表
-     */
     export interface DataInfo {
         code: number,
         msg: string,
@@ -17,5 +14,11 @@ export namespace CommonInterface{
             total: number,
             list: any[],
         },
+    }
+
+    export interface FailInfo {
+        code: number,
+        msg: string,
+        data: {},
     }
 }

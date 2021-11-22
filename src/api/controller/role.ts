@@ -17,3 +17,10 @@ router.get('/list', async(ctx, next) => {
     const list = await roleSql.getRoleList(query);
     ctx.body = list;
 });
+
+router.post('creatOrUpdate', async(ctx, next) => {
+    // @ts-ignore
+    const { body } = ctx.request;
+    const data = roleSql.creatOrUpdateRoleInfo(body);
+    ctx.body = data;
+});

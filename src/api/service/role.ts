@@ -3,6 +3,7 @@
  */
 import RoleInfo from '../model/role';
 import { CommonInterface } from '../../interface/common_interface';
+import { RoleNameSpace } from '../../interface/role';
 
 class RoleSql {
     /**
@@ -37,6 +38,66 @@ class RoleSql {
         } catch (err) {
             data.msg = `查询失败，${err.mesage}`;
             return data;
+        }
+    }
+
+    /**
+     * 新增或更新角色
+     */
+    async creatOrUpdateRoleInfo(query: RoleNameSpace.RoleInfo): Promise<CommonInterface.FailInfo> {
+        if (query.id) {
+            try {
+                RoleInfo.update(query, {
+                    where: {
+                        id: query.id,
+                    },
+                });
+                return {
+                    code: 0,
+                    msg: '更新成功',
+                    data: {},
+                };
+            } catch (e) {
+                return {
+                    code: 1,
+                    msg: `更新失败，${e}`,
+                    data: {},
+                };
+            }
+        }
+        try {
+            const role = await RoleInfo.findAll({
+                where: {
+                    roleName: query.roleName,
+                },
+            });
+            if (role) {
+                return {
+                    code: 1,
+                    msg: '新增失败，该角色已存在',
+                    data: {},
+                };
+            }
+            try {
+                await RoleInfo.create(query);
+                return {
+                    code: 0,
+                    msg: '新增成功',
+                    data: {},
+                };
+            } catch (e) {
+                return {
+                    code: 1,
+                    msg: `新增失败，${e}`,
+                    data: {},
+                };
+            }
+        } catch (e) {
+            return {
+                code: 1,
+                msg: `新增失败，${e}`,
+                data: {},
+            };
         }
     }
 }

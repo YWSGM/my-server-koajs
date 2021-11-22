@@ -1,7 +1,7 @@
-import { UserInfo } from '../../interface/user';
 import router from '../../router/index';
 import routerPath from '../../router/user-path';
 import UserSql from '../service/user';
+import { CommonInterface } from '../../interface/common_interface';
 
 // 路由前缀
 router.prefix('/users');
@@ -9,7 +9,7 @@ router.prefix('/users');
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
         const { pageSize, pageNum } = ctx.request.query as { pageSize: string; pageNum: string };
-        const query: UserInfo.PageInfo = {
+        const query: CommonInterface.PageInfo = {
             pageSize: pageSize ? +pageSize : 10,
             pageNum: pageNum ? +pageNum : 1,
         };
