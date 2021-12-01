@@ -71,7 +71,7 @@ class RoleSql {
                     roleName: query.roleName,
                 },
             });
-            if (role) {
+            if (role.length !== 0) {
                 return {
                     code: 1,
                     msg: '新增失败，该角色已存在',
@@ -101,6 +101,10 @@ class RoleSql {
         }
     }
 
+    /**
+     * 获取角色详情
+     * @param id 角色id
+     */
     async getRoleDetail(id: number): Promise<RoleNameSpace.RoleDetail> {
         const data = {
             data: {},
@@ -119,6 +123,32 @@ class RoleSql {
             return data;
         } catch (e) {
             return data;
+        }
+    }
+
+    /**
+     * 删除角色
+     * @param id 删除角色id
+     * @returns 接口成功信息
+     */
+    async deleteRole(id: number): Promise<CommonInterface.FailInfo> {
+        try {
+            await RoleInfo.destroy({
+                where: {
+                    id,
+                },
+            });
+            return {
+                code: 0,
+                msg: '删除成功',
+                data: {},
+            };
+        } catch (e) {
+            return {
+                code: 1,
+                msg: `删除失败，${e}`,
+                data: {},
+            };
         }
     }
 }
