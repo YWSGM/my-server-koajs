@@ -4,6 +4,7 @@
 import RoleInfo from '../model/role';
 import { CommonInterface } from '../../interface/common_interface';
 import { RoleNameSpace } from '../../interface/role';
+import { COMMON } from '../../common';
 
 class RoleSql {
     /**
@@ -29,14 +30,14 @@ class RoleSql {
                 order: [['id', 'DESC']],
             });
             data.code = 0;
-            data.msg = '查询成功';
+            data.msg = COMMON.MESSAGE.SUCCESS;
             data.data = {
                 total: roleList.length,
                 list: roleList,
             };
             return data;
         } catch (err) {
-            data.msg = `查询失败，${err.mesage}`;
+            data.msg = `${COMMON.MESSAGE.FAIL}，${err.mesage}`;
             return data;
         }
     }
@@ -54,13 +55,13 @@ class RoleSql {
                 });
                 return {
                     code: 0,
-                    msg: '更新成功',
+                    msg: `${COMMON.MESSAGE.UPDATESUCCESS}`,
                     data: {},
                 };
             } catch (e) {
                 return {
                     code: 1,
-                    msg: `更新失败，${e}`,
+                    msg: `${COMMON.MESSAGE.UPDATESUCCESS}，${e}`,
                     data: {},
                 };
             }
