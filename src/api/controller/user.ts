@@ -1,12 +1,11 @@
-import router from '../../router/index';
+import * as Router from 'koa-router';
 import routerPath from '../../router/user-path';
 import UserSql from '../service/user';
 import { CommonInterface } from '../../interface/common_interface';
 import ProducersMQ from '../../modules/mq/producers';
 import ConsumersMQ from '../../modules/mq/consumers';
 
-// 路由前缀
-router.prefix('/users');
+const router = new Router();
 
 router.get(routerPath.LIST, async(ctx, next) => {
     try {
@@ -80,3 +79,5 @@ router.post('/createOrUpdate', async(ctx, next) => {
         console.error('数据插入失败', e);
     }
 });
+
+export default router;

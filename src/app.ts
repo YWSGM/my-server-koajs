@@ -6,7 +6,7 @@ import config from './modules/db/default';
 import router from './router/index';
 
 // 新添加的接口必须在这里注册
-import './api/controller/user';
+import user from './api/controller/user';
 import './api/controller/role';
 
 // 添加模块代码
