@@ -2,11 +2,10 @@
  * 角色接口
  */
 
-import router from '../../router';
+import * as Router from 'koa-router';
 import roleSql from '../service/role';
 
-// 路由前缀
-router.prefix('/role');
+const router = new Router();
 
 router.get('/list', async(ctx, next) => {
     const { pageSize, pageNum } = ctx.request.query as { pageSize: string; pageNum: string };
@@ -32,9 +31,17 @@ router.get('/roleDetail', async(ctx) => {
     ctx.body = data;
 });
 
-router.post('creatOrUpdate', async(ctx, next) => {
+router.post('/creatOrUpdate', async(ctx, next) => {
     // @ts-ignore
     const { body } = ctx.request;
-    const data = roleSql.creatOrUpdateRoleInfo(body);
+    const data = await roleSql.creatOrUpdateRoleInfo(body);
     ctx.body = data;
 });
+
+router.get('/deleteRole', async(ctx) => {
+    const { id } = ctx.request.query as { id: string };
+    const data = await roleSql.deleteRole(+id);
+    ctx.body = data;
+});
+
+export default router;

@@ -4,6 +4,7 @@
 import RoleInfo from '../model/role';
 import { CommonInterface } from '../../interface/common_interface';
 import { RoleNameSpace } from '../../interface/role';
+import { COMMON } from '../../common';
 
 class RoleSql {
     /**
@@ -29,14 +30,14 @@ class RoleSql {
                 order: [['id', 'DESC']],
             });
             data.code = 0;
-            data.msg = '查询成功';
+            data.msg = COMMON.MESSAGE.SUCCESS;
             data.data = {
                 total: roleList.length,
                 list: roleList,
             };
             return data;
         } catch (err) {
-            data.msg = `查询失败，${err.mesage}`;
+            data.msg = `${COMMON.MESSAGE.FAIL}，${err.mesage}`;
             return data;
         }
     }
@@ -54,13 +55,13 @@ class RoleSql {
                 });
                 return {
                     code: 0,
-                    msg: '更新成功',
+                    msg: `${COMMON.MESSAGE.UPDATESUCCESS}`,
                     data: {},
                 };
             } catch (e) {
                 return {
                     code: 1,
-                    msg: `更新失败，${e}`,
+                    msg: `${COMMON.MESSAGE.UPDATESUCCESS}，${e}`,
                     data: {},
                 };
             }
@@ -71,7 +72,7 @@ class RoleSql {
                     roleName: query.roleName,
                 },
             });
-            if (role) {
+            if (role.length !== 0) {
                 return {
                     code: 1,
                     msg: '新增失败，该角色已存在',
@@ -101,6 +102,10 @@ class RoleSql {
         }
     }
 
+    /**
+     * 获取角色详情
+     * @param id 角色id
+     */
     async getRoleDetail(id: number): Promise<RoleNameSpace.RoleDetail> {
         const data = {
             data: {},
@@ -119,6 +124,32 @@ class RoleSql {
             return data;
         } catch (e) {
             return data;
+        }
+    }
+
+    /**
+     * 删除角色
+     * @param id 删除角色id
+     * @returns 接口成功信息
+     */
+    async deleteRole(id: number): Promise<CommonInterface.FailInfo> {
+        try {
+            await RoleInfo.destroy({
+                where: {
+                    id,
+                },
+            });
+            return {
+                code: 0,
+                msg: '删除成功',
+                data: {},
+            };
+        } catch (e) {
+            return {
+                code: 1,
+                msg: `删除失败，${e}`,
+                data: {},
+            };
         }
     }
 }
