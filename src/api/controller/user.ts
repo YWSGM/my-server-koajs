@@ -2,6 +2,8 @@ import router from '../../router/index';
 import routerPath from '../../router/user-path';
 import UserSql from '../service/user';
 import { CommonInterface } from '../../interface/common_interface';
+import ProducersMQ from '../../modules/mq/producers';
+import ConsumersMQ from '../../modules/mq/consumers';
 
 // 路由前缀
 router.prefix('/users');
@@ -13,6 +15,15 @@ router.get(routerPath.LIST, async(ctx, next) => {
             pageSize: pageSize ? +pageSize : 10,
             pageNum: pageNum ? +pageNum : 1,
         };
+        // mq 消息队列
+        // const producersMQ = new ProducersMQ();
+        // producersMQ.sendQueueMsg('testQueue', '123', (data: string) => {
+        //     console.log('testQueue---', data);
+        // });
+        // const consumersMQ = new ConsumersMQ();
+        // consumersMQ.receiveQueueMsg('testQueue', (data: any) => {
+        //     console.log(data);
+        // });
         const data = await UserSql.getList(query);
         ctx.body = data;
     } catch (e) {
