@@ -1,6 +1,6 @@
 // 消息消费者
 import * as mq from 'amqplib';
-import {ConsumeMessage} from "amqplib";
+import { ConsumeMessage } from 'amqplib';
 
 class ConsumersMQ {
     private hosts: any[];
