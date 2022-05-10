@@ -7,7 +7,7 @@ import ConsumersMQ from '../../modules/mq/consumers';
 
 const router = new Router();
 
-router.get(routerPath.LIST, async(ctx, next) => {
+router.get(routerPath.LIST, async (ctx, next) => {
     try {
         const { pageSize, pageNum } = ctx.request.query as { pageSize: string; pageNum: string };
         const query: CommonInterface.PageInfo = {
@@ -38,7 +38,7 @@ router.get(routerPath.LIST, async(ctx, next) => {
     }
 });
 
-router.get(routerPath.SELECTBYID, async(ctx, next) => {
+router.get(routerPath.SELECTBYID, async (ctx, next) => {
     const {
         id,
         // @ts-ignore
@@ -69,7 +69,7 @@ router.get(routerPath.SELECTBYID, async(ctx, next) => {
     }
 });
 
-router.post('/createOrUpdate', async(ctx, next) => {
+router.post('/createOrUpdate', async (ctx, next) => {
     // @ts-ignore
     const { body } = ctx.request;
     try {

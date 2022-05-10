@@ -32,7 +32,7 @@ class ProducersMQ {
                 // eslint-disable-next-line
                 return channel.assertQueue(queueName)
                     // eslint-disable-next-line
-                    .then(() =>{
+                    .then(() => {
                         return channel.sendToQueue(queueName, Buffer.alloc(msg.length, msg), { persistent: true });
                     })
                     .then((data: boolean) => {

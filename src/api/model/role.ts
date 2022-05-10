@@ -28,4 +28,5 @@ const roleInfo = mySequelize.define(
     },
 );
 
-export default class RoleInfo extends roleInfo {}
+export default class RoleInfo extends roleInfo {
+}

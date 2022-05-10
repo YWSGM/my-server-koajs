@@ -17,7 +17,7 @@ import router from './router/index';
 const app = new Application();
 
 // eslint-disable-next-line consistent-return
-app.use(async(ctx: { request: { path: string, method: string }, set: Function, body: any, response: any }, next: any) => {
+app.use(async (ctx: { request: { path: string, method: string }, set: Function, body: any, response: any }, next: any) => {
     // /** 请求路径 */
     const { path } = ctx.request;
 

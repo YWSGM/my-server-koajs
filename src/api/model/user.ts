@@ -40,4 +40,5 @@ const userInfo = mySequelize.define(
     },
 );
 
-export default class user extends userInfo {}
+export default class user extends userInfo {
+}

@@ -27,7 +27,7 @@ class ConsumersMQ {
                 return channel.assertQueue(queueName)
                     // eslint-disable-next-line
                     .then(() => {
-                        return channel.consume(queueName, (msg:ConsumeMessage | null) => {
+                        return channel.consume(queueName, (msg: ConsumeMessage | null) => {
                             if (msg !== null) {
                                 const data = msg.content.toString();
                                 channel.ack(msg);
