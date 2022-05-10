@@ -36,9 +36,15 @@ class ProducersMQ {
                         return channel.sendToQueue(queueName, Buffer.alloc(msg.length, msg), { persistent: true });
                     })
                     .then((data: boolean) => {
-                        if (data) {
-                            callBack && callBack('success');
-                            channel.close();
+                        try {
+                            if (data) {
+                                callBack && callBack('success');
+                                channel.close();
+                            } else {
+                                callBack('fail');
+                            }
+                        } catch (err) {
+                            callBack(JSON.stringify(err));
                         }
                     })
                     .catch(() => {
