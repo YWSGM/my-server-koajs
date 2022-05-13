@@ -1,6 +1,6 @@
 // 消息消费者
 import * as mq from 'amqplib';
-import { ConsumeMessage } from 'amqplib';
+import { Channel, Connection, ConsumeMessage } from 'amqplib';
 
 class ConsumersMQ {
     private hosts: any[];
@@ -9,7 +9,7 @@ class ConsumersMQ {
 
     private length: number;
 
-    private open: Promise<any>
+    private open: Promise<Connection>
 
     constructor() {
         this.hosts = [];
@@ -21,9 +21,9 @@ class ConsumersMQ {
     public receiveQueueMsg(queueName: string, receiveCallBack: Function, errorCallBack?: Function) {
         const that = this;
         that.open
-            .then((conn) => conn.createChannel())
+            .then((conn: Connection) => conn.createChannel())
             // eslint-disable-next-line
-            .then((channel) => {
+            .then((channel: Channel) => {
                 return channel.assertQueue(queueName)
                     // eslint-disable-next-line
                     .then(() => {
